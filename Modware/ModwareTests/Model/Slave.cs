@@ -81,16 +81,19 @@ namespace ModwareTests.UnitTests.Models
             //verify the correct send Message is called
             int[] regs = message.registers.ToArray();
             slaveConnector.Verify(s => s.WriteSingleRegister(message.startReg, 123),Moq.Times.Once);
+            slaveConnector.Verify(s => s.WriteSingleRegister(message.startReg, 124), Moq.Times.Once);
+            slaveConnector.Verify(s => s.WriteSingleRegister(message.startReg, 125), Moq.Times.Once);
+
         }
 
         [Test]
-        public void sendReadMessage_singleTypeInt_readSingleRegisters()
+        public void sendReadMessage_Coils_readCoil()
         {
             var slaveConnector = new Moq.Mock<ITCPSlaveConnector>();
             slave = new TCPSlave(slaveConnector.Object);
             ModbusTCPReadMessage<bool> message = new ModbusTCPReadMessage<bool>()
             {
-                functionCode = ModbusTCPReadMessage<bool>.FunctionCode.ReadSingle,
+                functionCode = ModbusTCPReadMessage<bool>.FunctionCode.ReadCoils,
                 startReg = 30,
                 length = 40,
             };
@@ -98,8 +101,61 @@ namespace ModwareTests.UnitTests.Models
             slave.sendReadMessage<bool>(message);
 
             //verify the correct send Message is called
-            int[] regs = message.registers.ToArray();
-            slaveConnector.Verify(s => s.WriteSingleRegister(message.startReg, 123), Moq.Times.Once);
+            slaveConnector.Verify(s => s.ReadCoils(message.startReg, (message.length)), Moq.Times.Once);
+        }
+
+        [Test]
+        public void sendReadMessage_DiscreteInputs_readDiscreteInputs()
+        {
+            var slaveConnector = new Moq.Mock<ITCPSlaveConnector>();
+            slave = new TCPSlave(slaveConnector.Object);
+            ModbusTCPReadMessage<bool> message = new ModbusTCPReadMessage<bool>()
+            {
+                functionCode = ModbusTCPReadMessage<bool>.FunctionCode.ReadDiscreteInputs,
+                startReg = 30,
+                length = 40,
+            };
+
+            slave.sendReadMessage<bool>(message);
+
+            //verify the correct send Message is called
+            slaveConnector.Verify(s => s.ReadDiscreteInputs(message.startReg, (message.length)), Moq.Times.Once);
+        }
+
+        [Test]
+        public void sendReadMessage_HoldingRegisters_readHoldingRegisters()
+        {
+            var slaveConnector = new Moq.Mock<ITCPSlaveConnector>();
+            slave = new TCPSlave(slaveConnector.Object);
+            ModbusTCPReadMessage<int> message = new ModbusTCPReadMessage<int>()
+            {
+                functionCode = ModbusTCPReadMessage<int>.FunctionCode.ReadHoldingRegisters,
+                startReg = 30,
+                length = 40,
+            };
+
+            slave.sendReadMessage<int>(message);
+
+            //verify the correct send Message is called
+            slaveConnector.Verify(s => s.ReadHoldingRegisters(message.startReg, (message.length)), Moq.Times.Once);
+        }
+
+        [Test]
+        public void sendReadMessage_InputRegisters_readInputRegisters()
+        {
+            var slaveConnector = new Moq.Mock<ITCPSlaveConnector>();
+            slave = new TCPSlave(slaveConnector.Object);
+            ModbusTCPReadMessage<int> message = new ModbusTCPReadMessage<int>()
+            {
+                functionCode = ModbusTCPReadMessage<int>.FunctionCode.ReadInputRegisters,
+                startReg = 30,
+                length = 40,
+            };
+
+            slave.sendReadMessage<int>(message);
+
+            //verify the correct send Message is called
+            slaveConnector.Verify(s => s.ReadInputRegisters(message.startReg, (message.length)));
         }
     }
 }

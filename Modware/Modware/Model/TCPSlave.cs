@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Modware.Models.Interfaces;
 using Modware.Services.Interfaces;
 using EasyModbus;
+using Modware.Presenters.Interfaces;
 
 namespace Modware.Models
 {
@@ -13,11 +14,14 @@ namespace Modware.Models
     {
         ConnectionState connectionState = ConnectionState.disconnected;
         ITCPSlaveConnector _connector;
-        
+
         public TCPSlave(ITCPSlaveConnector connector)
         {
             _connector = connector;
         }
+
+        public string name { get; set; }
+        public ITCPSlavePresenter _presenter { get; set; }
 
         public void connect(ModbusTCPConnectionParameters connectionParams)
         {

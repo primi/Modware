@@ -27,22 +27,22 @@ namespace Modware.Services
             _client.Connect(ipaddress, port);
         }
 
-        public bool[] ReadDiscreteInputs(int startReg, byte length)
+        public bool[] ReadDiscreteInputs(int startReg, int length)
         {
             return _client.ReadDiscreteInputs(startReg, length);
         }
 
-        public int[] ReadHoldingRegisters(int startReg, byte length)
+        public int[] ReadHoldingRegisters(int startReg, int length)
         {
             return _client.ReadHoldingRegisters(startReg, length);
         }
 
-        public int[] ReadInputRegisters(int startReg, byte length)
+        public int[] ReadInputRegisters(int startReg, int length)
         {
             return _client.ReadInputRegisters(startReg, length);
         }
 
-        public bool[] ReadCoils(int startReg, byte length)
+        public bool[] ReadCoils(int startReg, int length)
         {
             return _client.ReadCoils(startReg, length);
         }

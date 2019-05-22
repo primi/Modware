@@ -4,14 +4,16 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Modware.Presenters.Interfaces;
 using Modware.Services.Interfaces;
 
 namespace Modware.Models.Interfaces
 {
     public interface ITCPSlave
     {
+        string name { get; set; }
         void connect(ModbusTCPConnectionParameters connectionParams);
-        List<T> sendReadMessage<T>(ModbusTCPReadMessage message);
+        List<T> sendReadMessage<T>(ModbusTCPReadMessage<T> message);
         void sendWriteMessage<T>(ModbusTCPWriteMessage<T> message);
     }
 
@@ -29,12 +31,14 @@ namespace Modware.Models.Interfaces
         public FunctionCode functionCode;
         public int startReg;
         public int offset;
-        public byte length;
+        public int length;
 
         public enum FunctionCode
         {
-            ReadMultiple,
-            ReadSingle
+            ReadCoils,
+            ReadDiscreteInputs,
+            ReadHoldingRegisters,
+            ReadInputRegisters
         }
     }
 
