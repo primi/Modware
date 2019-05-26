@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Modware.Presenters.Interfaces;
+using Modware.Services;
 using Modware.Services.Interfaces;
 
 namespace Modware.Models.Interfaces
@@ -12,9 +14,13 @@ namespace Modware.Models.Interfaces
     public interface ITCPSlave
     {
         string name { get; set; }
-        void connect(ModbusTCPConnectionParameters connectionParams);
+        ModbusTCPConnectionParameters connectionParams { get; set;  }
+        List<LogElement> logs { get; set; }
+        ConnectionState connectionState { get; set; }
+        void connect();
         List<T> sendReadMessage<T>(ModbusTCPReadMessage<T> message);
         void sendWriteMessage<T>(ModbusTCPWriteMessage<T> message);
+        event EventHandler<LogElement> logUpdated;
     }
 
     public struct ModbusTCPConnectionParameters

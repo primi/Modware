@@ -26,13 +26,14 @@ namespace Modware.Factories
             }
         }
 
-        public ITCPSlavePresenter createPresenter()
+        public ITCPSlavePresenter createPresenter(ISession _session)
         {
             return (ITCPSlavePresenter)new TCPSlavePresenter(
                 new TCPSlave(
                     new TCPSlaveConnector(
                         new EasyModbus.ModbusClient())),
-                null);
+                null,
+                _session);
         }
     }
 }

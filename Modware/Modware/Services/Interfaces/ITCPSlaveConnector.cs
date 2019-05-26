@@ -12,7 +12,7 @@ namespace Modware.Services.Interfaces
     {
         byte nodeID { get; set; }
         int connectionTimeout { get; set; }
-        void connect(string ipaddress, int port);
+        bool connect(string ipaddress, int port);
         bool[] ReadDiscreteInputs(int startReg, int length);
         int[] ReadHoldingRegisters(int startReg, int length);
         int[] ReadInputRegisters(int startReg, int length);

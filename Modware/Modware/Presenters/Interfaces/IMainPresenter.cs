@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Modware.Presenters.Interfaces
 {
-    interface IMainPresenter
+    public interface IMainPresenter
     {
         void LoadViewNavPanel();
         void setNav(INavView navView);

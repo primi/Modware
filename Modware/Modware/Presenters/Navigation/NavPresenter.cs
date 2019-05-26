@@ -21,8 +21,14 @@ namespace Modware.Presenters.Navigation
         {
             _navView = navView;
             _session = session;
+            _session.notifyChange += refresh;
             navView.addSlaveRequest += NavView_addSlave;
             navView.nodeDoubleClicked += NavView_nodeDoubleClicked;
+        }
+
+        private void refresh(object sender, EventArgs e)
+        {
+            loadData();
         }
 
         private void NavView_nodeDoubleClicked(object sender, TreeNodeMouseClickEventArgs e)

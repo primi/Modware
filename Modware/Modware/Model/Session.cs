@@ -1,12 +1,6 @@
 ﻿using Modware.Models.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Modware.Models.Interfaces;
-using Modware.Services;
-using Modware.Services.Interfaces;
 using Modware.Factories;
 using Modware.Presenters.Interfaces;
 
@@ -14,7 +8,7 @@ namespace Modware.Models
 {
     class Session : ISession
     {
-        
+        public event EventHandler notifyChange;
 
         public Session()
         {
@@ -26,12 +20,17 @@ namespace Modware.Models
             get;
         }
 
+        public void notifyUpdate()
+        {
+            notifyChange(this, EventArgs.Empty);
+        }
+
         public void addNewTCPSlavePresenter()
         {
             string name;
             int index = 0;
 
-            ITCPSlavePresenter slavePresenter = TCPSlavePresenterFactory.Instance.createPresenter();
+            ITCPSlavePresenter slavePresenter = TCPSlavePresenterFactory.Instance.createPresenter(this);
 
             do
             {

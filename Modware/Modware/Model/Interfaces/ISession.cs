@@ -9,8 +9,10 @@ using Modware.Services.Interfaces;
 
 namespace Modware.Models.Interfaces
 {
-    interface ISession
+    public interface ISession
     {
+        event EventHandler notifyChange;
+        void notifyUpdate();
         void addNewTCPSlavePresenter();
         List<ITCPSlavePresenter> slavePresenters { get; }
     }

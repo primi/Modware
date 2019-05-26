@@ -22,9 +22,17 @@ namespace Modware.Services
         #endregion
         
         #region public methods
-        public void connect(string ipaddress, int port)
+        public bool connect(string ipaddress, int port)
         {
-            _client.Connect(ipaddress, port);
+            try
+            {
+                _client.Connect(ipaddress, port);
+                return true;
+            }
+            catch
+            {
+                return false; ;
+            }
         }
 
         public bool[] ReadDiscreteInputs(int startReg, int length)
